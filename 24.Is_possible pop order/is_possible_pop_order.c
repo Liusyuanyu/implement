@@ -49,6 +49,12 @@ int main(int argc, char const *argv[])
 		cout<<pPop[r]<<" ";
 	}
 	cout<<endl;
+//	bool bPossible;
+	if(IsPossiblePopOrder(pPush,pPop,nLength))
+		cout<<"It is possible !"<<endl;
+	else
+		cout<<"False"<<endl;
+
 	return 0;
 }
 
@@ -59,6 +65,26 @@ bool IsPossiblePopOrder(int* pPush,int * pPop ,int nLength){
 		int *pNextPush = pPush;
 		int *pNextPop = pPop;
 		stack<int> stackData;
+
+		while(pNextPop - pPop < nLength){
+			while(stackData.empty() || stackData.top() != *pNextPop){
+				if(pNextPush == NULL)
+					break;
+				stackData.push(*pNextPush);
+				//because first has been pushed in stack,only need do nlength -1 times ++ 
+				if(pNextPush - pPush < nLength -1 )
+					pNextPush++;
+				else
+					pNextPush = NULL;
+			}
+			if(stackData.top() != *pNextPop)
+				break;
+
+			stackData.pop();
+			pNextPop++;
+		}
+		if(stackData.empty() && pNextPop - pPop == nLength)
+			bPossible = true;
 	}
-	return TRUE;
+	return bPossible;
 }
