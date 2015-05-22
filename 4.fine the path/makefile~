@@ -1,0 +1,14 @@
+all:fine_path
+
+fine_path:make_tree.o fine.o
+	gcc -g -Wall -o fine_path fine.o make_tree.o
+fine.o:fine.cpp
+	gcc -c -Wall fine.cpp
+
+make_tree.o:make_tree.cpp
+	gcc  -c -Wall make_tree.cpp
+
+dep:
+	gcc -H make_tree.h fine.h make_tree.cpp fine.cpp > .depend
+clean:
+	rm -f fine_path *.o .depend
